@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const ProductService = require('./product-service')
+const DogService = require('../dog/dog-service')
 
 const productRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -10,7 +11,8 @@ productRouter
 .get((req, res, next) => {
     const active = true
     
-    ProductService.getAllProducts(
+
+    ProductService.getProductsForDog(
         req.app.get('db'),
         active
     )
@@ -51,20 +53,33 @@ productRouter
 })
 
 productRouter
-.route('/:product_id')
-.patch(jsonBodyParser, (req, res, next) => {
-    const { active } = req.body;
-    const productUpdate = { active }
-    console.log(req.body)
+.route('/:id')
+.get(jsonBodyParser, (req, res, next) => {
+    const { id } = req.params;
     
-    ProductService.updateProduct(
+    ProductService.getById(
         req.app.get('db'),
-        req.params.product_id,
-        productUpdate
+        id
     )
-    .then(numRowsAffected => {
-        
-        res.status(204).end()
+    .then(product => {
+        res.json(product)
+    })
+    .catch(next)
+})
+
+productRouter
+.route('/fordog/:dog_id')
+.get(jsonBodyParser, (req, res, next) => {
+    const { dog_id } = req.params;
+    
+   
+    
+    ProductService.getProductsForDog(
+        req.app.get('db'),
+        dog_id
+    )
+    .then(product => {
+        res.json(product)
     })
     .catch(next)
 })

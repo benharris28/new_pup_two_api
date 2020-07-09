@@ -9,6 +9,8 @@ const productRouter = require('./product/product-router')
 const foodRouter = require('./food/food-router')
 const authRouter = require('./auth/auth-router')
 const mapRouter = require('./map/map-router')
+const dogRouter = require('./dog/dog-router')
+const attributeRouter = require('./attribute/attribute-router')
 
 const app = express()
 
@@ -25,6 +27,8 @@ app.use('/api/product', productRouter)
 app.use('/api/food', foodRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/map', mapRouter)
+app.use('/api/dog', dogRouter)
+app.use('/api/attribute', attributeRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')
