@@ -74,7 +74,7 @@ productRouter
     
    
     
-    ProductService.getProductsForDog(
+    ProductService.getProductsForDogs(
         req.app.get('db'),
         dog_id
     )
