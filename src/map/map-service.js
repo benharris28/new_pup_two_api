@@ -4,12 +4,13 @@ const MapService = {
     async getMarkers(db, lat, lng) {
         
         let query = await db.raw( 
-                    `select marker_id, name, address, lat, lng,  distance
-                    from markers
+                    `select professional_id, name, address, lat, lng,  distance
+                    from professional
+                    
                     join (
-                    SELECT marker_id as id,
+                    SELECT professional_id as id,
                     (3959 * acos( cos( radians(${lat}) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(${lng}) ) + sin( radians(${lat}) ) * sin( radians( lat ) ) ) ) AS distance
-                    FROM markers) as s on s.id = markers.marker_id and distance < 10
+                    FROM professional) as s on s.id = professional.professional_id and distance < 10
                     ORDER BY distance 
                     LIMIT 20;`
                 )
