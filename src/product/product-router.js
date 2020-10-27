@@ -84,6 +84,22 @@ productRouter
     .catch(next)
 })
 
+productRouter
+.route('/test/testy')
+.get(jsonBodyParser, (req, res, next) => {
+    
+    
+    const { dog_id } = req.params;
+    
+    ProductService.getProductsTest(
+        req.app.get('db')
+    )
+    .then(product => {
+        res.json(product)
+    })
+    .catch(next)
+})
+
 
 
 

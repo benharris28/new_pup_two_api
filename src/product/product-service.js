@@ -70,22 +70,57 @@ const ProductService = {
         
     },
 
-    async getProductsForDogs2(db) {
-            let dogAttribute = [2,12]
+    async getProductsTest(db) {
+            let dogAttribute = [2,12];
+
+       
 
             // knex query
-            let product = await db('product_attribute')
+            const product = await db('product_attribute')
                 .join('product', 'product.id', '=', 'product_attribute.product_id')
-                .select('product_id')
-                .whereIn('attribute_id', dogAttribute)
-                .where('product.category_id', 1)
+                .select('product_id', 'product.brand')
+                .whereIn('product_attribute.attribute_id', dogAttribute)
+                .where('product.category_id', '1')
                 .whereNull('product.deleted_at')
-                .groupBy('product_attribute.product_id')
-                .first()
+                .groupBy('product_attribute.product_id', 'product.brand')
+       
+            
           
             console.log(product)
 
+            const testMap = product.map(p => 
+                this.getById(db, p.product_id
+                    ))
+
+            return testMap
     },
+
+    async getProductsTest2(db) {
+        let dogAttribute = [2,12];
+
+        // knex query
+        const product = await db
+            .select('p.id', 'p.brand')
+            .from('product_attribute AS pa')
+            .leftJoin('product AS p', 'pa.product_id', 'p.id')
+            .where()
+          
+        
+        
+        ('product_attribute')
+            .join('product', 'product.id', '=', 'product_attribute.product_id')
+            .select('product_id', )
+            .whereIn('product_attribute.attribute_id', dogAttribute)
+            .where('product.category_id', '1')
+            .whereNull('product.deleted_at')
+            .groupBy('product_attribute.product_id')
+          
+      
+        console.log(product)
+
+        return product
+
+},
 
     getAllProducts(db, active) {
         return db
