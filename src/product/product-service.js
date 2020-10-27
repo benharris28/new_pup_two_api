@@ -88,9 +88,18 @@ const ProductService = {
           
             console.log(product)
 
-            const testMap = product.map(p => 
-                this.getById(db, p.product_id
-                    ))
+            const testMap = product.map(p => {
+                const item = this.getById(db, p.product_id)
+               
+                return item
+              
+            } 
+              
+                
+           
+                    )
+
+                    
 
             return testMap
     },
